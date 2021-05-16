@@ -1,0 +1,29 @@
+
+/* Bar plot below */
+
+.axis .domain{
+	stroke: pink !important;
+}
+
+.bar {
+    stroke: rgb(66, 202, 191);
+    stroke-width: 0.5%;
+}
+
+.rec {
+    stroke: rgb(138, 100, 19);
+    stroke-width: 0.2%;
+}
+
+.hSvg .domain{
+	stroke: rgb(205, 238, 151) !important;
+}
+
+.corrSvg .domain, .corrSvg line{
+	stroke: rgb(205, 238, 151) !important;
+}
+
+.corrSvg {
+    position: relative;
+    top: 14%;
+}

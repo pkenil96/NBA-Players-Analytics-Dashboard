@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/graphStyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="js/loadData.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
+</head>
+
+<body>
+    <div class="pageContainer">
+        <div class="box-area">
+            <header>
+                <img id="nbaLogo" src="https://cdn.nba.com/logos/leagues/logo-nba.svg" style="
+                width: 62px;
+                position: absolute;
+                left: 3%; top: 10%;
+            ">
+            <img src="assets/usaFlag.png" style="
+            width: 50px;
+            position: absolute;
+            right: 2%; top: 1%;
+        ">
+                <div class="titleWrapper">
+                    <h2>NBA Player Statistic Dashboard</h2>
+                    <nav>
+                        <!-- Enter any additional menu information here -->
+                    </nav>
+                </div>
+            </header>
+        </div>
+
+        <div class="flexContainer">
+            <div class="leftCanvas">
+                <p id="countryTag">Filtered By Nationality: <span id="countryFilter">N/A</span></p>
+                <div class="lTopCanvas">
+                </div>
+                <div class="lBottomCanvas">
+
+                </div>
+            </div>
+            <div class="menuContainer">
+                <button id="rating" value="rating" title="Player Rating">
+                    <img src="assets/rating.png">
+                </button>
+
+                <button id="age" value="age" title="Age">
+                    <img src="assets/age.png">
+                </button>
+                <button id="country" value="country" title="Nationality">
+                    <img src="assets/country.png">
+                </button>
+
+                <button id="team" value="team" title="Team">
+                    <img src="assets/team.png">
+                </button>
+                <button id="jersey" value="jersey" title="Jersey Number">
+                    <img src="assets/jersey.png">
+                </button>
+                <button id="position" value="position" title="Position">
+                    <img src="assets/position.png">
+                </button>
+                <button id="salary" value="salary" title="Annual Salary">
+                    <img src="assets/moneyBag.png">
+                </button>
+
+                <button id="height" value="height" title="Player Height (cm)">
+                    <img src="assets/height.png">
+                </button>
+                <button id="weight" value="weight" title="Player Weight (lbs)">
+                    <img src="assets/weight.png">
+                </button>
+                <button id="draftClass" value="draftClass" title="Draft Class">
+                    <img src="assets/year.png">
+                </button>
+                <button id="draftRound" value="draftRound" title="Draft Round">
+                    <img src="assets/draftRound.png">
+                </button>
+                <button id="draftPick" value="draftPick" title="Draft Pick">
+                    <img src="assets/draftPicks.png">
+                </button>
+
+            </div>
+            <div class="rightCanvas">
+                <p id="barTag">Filtered By <br> <span id="barLabel"></span> <span id="barFilter"></span></p>
+                <div class="rTopCanvas">
+                    <svg></svg>
+                </div>
+                <div class="rBottomCanvas">
+                    <div class="rBottomLeft"></div>
+                    <div class="rBottomRight"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--Floating basket div-->
+        <div class="floatDiv">
+            <img id="ratingBall" src="assets/rating.png">
+            <img id="ageBall" src="assets/age.png">
+            <img id="countryBall" src="assets/country.png">
+            <img id="teamBall" src="assets/team.png">
+            <img id="salaryBall" src="assets/moneyBag.png">
+            <img id="positionBall" src="assets/position.png">
+            <img id="jerseyBall" src="assets/jersey.png">
+            <img id="heightBall" src="assets/height.png">
+            <img id="weightBall" src="assets/weight.png">
+            <img id="draftClassBall" src="assets/year.png">
+            <img id="draftRoundBall" src="assets/draftRound.png">
+            <img id="draftPickBall" src="assets/draftPicks.png">
+            <img id="hoop" src="assets/hoop2.png">
+        </div>
+
+        <img id="refreshBtn" src="assets/refresh.png">
+        <img id="seawolvesLogo" src="assets/seawolves.png">
+        <p id="mdsTitle">MDS Correlation</p>
+    </div>
+</body>
+
+<script>
+    var globalBtnCounter = 0;
+    jQuery(".menuContainer button").on('click', function () {
+        var clickedAttribute = (this).value
+        globalBtnCounter++;
+        if (globalBtnCounter == 5) {
+            myMove(clickedAttribute);
+            globalBtnCounter = 0;
+        }
+    })
+
+    var id = null;
+    function myMove(currentAttribute) {
+        $('.floatDiv').css('z-index', '1000');
+        var elemString = currentAttribute + "Ball"
+
+        var elem = document.getElementById(elemString);
+        var hoop = document.getElementById("hoop");
+        elem.style.opacity = 1
+        hoop.style.opacity = 1
+
+        var pos = 0;
+        clearInterval(id);
+        if (elem != null) {
+            id = setInterval(frame, 10);
+        }
+        function frame() {
+            if (pos >= 55) {
+                elem.style.opacity = 0
+                hoop.style.opacity = 0
+                elem.style.top = "5%";
+                $('.floatDiv').css('z-index', '-20');
+                clearInterval(id);
+            } else {
+                pos++;
+                elem.style.top = pos + "%";
+            }
+        }
+    }
+
+
+</script>
+
+<script src="js/index.js"></script>
+<script src="js/wordMap.js"></script>
+<script src="js/mdsCorrelation.js"></script>
+
+</html>
